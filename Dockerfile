@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV INITRD No
 
 RUN apt-get update && apt-get install -y apache2 php5 php5-mysql php5-mcrypt \
-php5-curl php5-gd php5-imagick
+php5-curl php5-gd php5-imagick cron
 RUN apt-get install -y libapache2-mod-php5
 
 # eyeD3 MP3 tag inspector
