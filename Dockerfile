@@ -6,7 +6,8 @@ ENV REFRESHED_AT 2016-03-10
 ENV DEBIAN_FRONTEND noninteractive
 ENV INITRD No
 
-RUN apt-get update && apt-get install -y apache2 php5 php5-mysql php5-mcrypt
+RUN apt-get update && apt-get install -y apache2 php5 php5-mysql php5-mcrypt \
+php5-curl php5-gd php5-imagick
 RUN apt-get install -y libapache2-mod-php5
 
 # eyeD3 MP3 tag inspector
@@ -42,6 +43,12 @@ ENV APACHE_LOCK_DIR /var/lock/apache2
 #apache modules and config
 RUN a2enmod rewrite
 ADD apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+#php config
+RUN rm -rf /etc/php5/apache2/conf.d
+RUN rm /etc/php5/apache2/php.ini
+ADD php /etc/php5/apache2
+
 
 EXPOSE 80
 CMD ["/usr/bin/supervisord"]
