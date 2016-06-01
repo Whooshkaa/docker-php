@@ -14,6 +14,14 @@ RUN apt-get install -y wget
 # eyeD3 MP3 tag inspector
 RUN apt-get install -y eyeD3
 
+# command to add repositories
+RUN apt-get install -y software-properties-common
+
+# audio waveform generator
+RUN add-apt-repository ppa:chris-needham/ppa
+RUN apt-get update
+RUN apt-get install -y audiowaveform
+
 # image compression
 RUN apt-get install -y advancecomp pngcrush gifsicle jpegoptim libjpeg-progs libjpeg8-dbg \
 libimage-exiftool-perl imagemagick pngnq libpng-dev pngquant optipng libjpeg-turbo-progs \
