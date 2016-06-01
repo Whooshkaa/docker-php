@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Phil Dodd "tripper54@gmail.com"
-ENV REFRESHED_AT 2016-04-20
+ENV REFRESHED_AT 2016-06-01
 
 # avoid debconf and initrd
 ENV DEBIAN_FRONTEND noninteractive
@@ -9,6 +9,7 @@ ENV INITRD No
 RUN apt-get update && apt-get install -y apache2 php5 php5-mysql php5-mcrypt \
 php5-curl php5-gd php5-imagick cron
 RUN apt-get install -y libapache2-mod-php5
+RUN apt-get install -y wget
 
 # eyeD3 MP3 tag inspector
 RUN apt-get install -y eyeD3
@@ -23,6 +24,16 @@ RUN apt-get install -y automake autotools-dev g++ git libcurl4-gnutls-dev libfus
 RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 RUN cd s3fs-fuse
 RUN cd s3fs-fuse && ./autogen.sh && ./configure && make && make install
+
+# Filebeat to send logs to ELK stack
+RUN apt-get install apt-transport-https -y
+RUN echo "deb https://packages.elastic.co/beats/apt stable main" |  tee -a /etc/apt/sources.list.d/beats.list
+RUN apt-get update -y
+RUN apt-get install filebeat -y --force-yes
+
+# Python and aws cli to copy things from s3
+RUN apt-get -y install python-pip
+RUN pip install awscli
 
 #supervisord
 RUN apt-get install -y supervisor
