@@ -31,7 +31,9 @@ RUN ln -s googletest-release-1.8.0/googlemock googlemock
 WORKDIR /audiowaveform/build
 RUN cmake ..
 RUN make
+RUN make install
 WORKDIR /
+RUN rm -rf /audiowaveform
 
 
 
