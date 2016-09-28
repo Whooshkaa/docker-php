@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Phil Dodd "tripper54@gmail.com"
-ENV REFRESHED_AT 2016-09-09
+ENV REFRESHED_AT 2016-09-29
 
 # avoid debconf and initrd
 ENV DEBIAN_FRONTEND noninteractive
@@ -61,6 +61,7 @@ ENV APACHE_LOCK_DIR /var/lock/apache2
 
 #apache modules and config
 RUN a2enmod rewrite
+RUN a2enmod expires
 ADD apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 #php config
