@@ -1,15 +1,13 @@
 FROM ubuntu:16.04
 MAINTAINER Phil Dodd "tripper54@gmail.com"
-ENV REFRESHED_AT 2016-09-29
+ENV REFRESHED_AT 2016-10-27
 
 # avoid debconf and initrd
 ENV DEBIAN_FRONTEND noninteractive
 ENV INITRD No
 
 RUN apt-get update && apt-get install -y apache2 php php-mysql php-mcrypt \
-php-curl php-gd php-imagick cron
-RUN apt-get install -y libapache2-mod-php
-RUN apt-get install -y wget
+php-curl php-gd php-imagick php-xml cron libapache2-mod-php wget
 
 # eyed3 MP3 tag inspector
 RUN apt-get install -y eyed3
