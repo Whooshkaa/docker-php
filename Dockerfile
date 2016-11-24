@@ -10,7 +10,7 @@ ENV INITRD No
 # waveform generator dependencies, image compression tools, s3fuse
 # supervisor, filebeat, AWS cli
 RUN apt-get update && apt-get install -y apache2 php php-mysql php-mcrypt \
-php-curl php-gd php-imagick php-xml cron libapache2-mod-php wget eyed3 \
+php-curl php-zip php-gd php-imagick php-xml cron libapache2-mod-php wget eyed3 \
 software-properties-common git-core make cmake gcc g++ libmad0-dev libsndfile1-dev \
 libgd2-xpm-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev \
 advancecomp pngcrush gifsicle jpegoptim libjpeg8-dbg \
