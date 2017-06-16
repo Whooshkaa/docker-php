@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
-MAINTAINER Phil Dodd "tripper54@gmail.com"
-ENV REFRESHED_AT 2016-11-22
+MAINTAINER Phil Dodd "phil@whooshkaa.com"
+ENV REFRESHED_AT 2017-06-16
 
 # avoid debconf and initrd
 ENV DEBIAN_FRONTEND noninteractive
@@ -9,7 +9,12 @@ ENV INITRD No
 # Install all dependencies: PHP, Apache, eyed3, extra repositories,
 # waveform generator dependencies, image compression tools, s3fuse
 # supervisor, filebeat, AWS cli
-RUN apt-get update && apt-get install -y apache2 php php-mysql php-mcrypt \
+# filebeat
+RUN echo "deb http://packages.elastic.co/beats/apt stable main" |  tee -a /etc/apt/sources.list.d/beats.list
+RUN apt-get update && apt-get install -y --allow-downgrades \
+--allow-remove-essential --allow-change-held-packages \
+--allow-unauthenticated \
+apache2 php php-mysql php-mcrypt \
 php-curl php-zip php-gd php-imagick php-xml cron libapache2-mod-php wget eyed3 \
 software-properties-common git-core make cmake gcc g++ libmad0-dev libsndfile1-dev \
 libgd2-xpm-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev \
@@ -18,32 +23,29 @@ libimage-exiftool-perl imagemagick pngnq libpng-dev pngquant optipng libjpeg-tur
 libav-tools \
 automake autotools-dev git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev pkg-config \
 apt-transport-https \
-python-pip supervisor
+python-pip supervisor \
+libid3tag0-dev \
+filebeat
 
 # audio waveform generator
-RUN git clone https://github.com/bbcrd/audiowaveform.git
-RUN mkdir /audiowaveform/build
-WORKDIR /audiowaveform
-RUN wget https://github.com/google/googletest/archive/release-1.8.0.tar.gz
-RUN tar xzf release-1.8.0.tar.gz
-RUN ln -s googletest-release-1.8.0/googletest googletest
-RUN ln -s googletest-release-1.8.0/googlemock googlemock
-WORKDIR /audiowaveform/build
-RUN cmake ..
-RUN make
-RUN make install
-WORKDIR /
-RUN rm -rf /audiowaveform
+RUN git clone https://github.com/bbcrd/audiowaveform.git \
+&& mkdir /audiowaveform/build \
+&& cd /audiowaveform \
+&& wget https://github.com/google/googletest/archive/release-1.8.0.tar.gz \
+&& tar xzf release-1.8.0.tar.gz \
+&& ln -s googletest-release-1.8.0/googletest googletest \
+&& ln -s googletest-release-1.8.0/googlemock googlemock \
+&& cd /audiowaveform/build \
+&& cmake .. \
+&& make \
+&& make install \
+&& cd / \
+&& rm -rf /audiowaveform
 
 # s3fuse
-RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git
-RUN cd s3fs-fuse
-RUN cd s3fs-fuse && ./autogen.sh && ./configure && make && make install
-
-# Filebeat to send logs to ELK stack
-RUN echo "deb https://packages.elastic.co/beats/apt stable main" |  tee -a /etc/apt/sources.list.d/beats.list
-RUN apt-get update -y
-RUN apt-get install filebeat -y --force-yes
+RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git \
+&& cd s3fs-fuse && ./autogen.sh && ./configure && make && make install \
+&& cd / && rm -rf s3fs-fuse
 
 # Python and aws cli to copy things from s3
 RUN pip install awscli
