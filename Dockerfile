@@ -9,8 +9,6 @@ ENV INITRD No
 # Install all dependencies: PHP, Apache, eyed3, extra repositories,
 # waveform generator dependencies, image compression tools, s3fuse
 # supervisor, filebeat, AWS cli
-# filebeat
-RUN echo "deb http://packages.elastic.co/beats/apt stable main" |  tee -a /etc/apt/sources.list.d/beats.list
 RUN apt-get update && apt-get install -y --allow-downgrades \
 --allow-remove-essential --allow-change-held-packages \
 --allow-unauthenticated \
@@ -26,7 +24,6 @@ automake autotools-dev git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-de
 apt-transport-https \
 python-pip supervisor \
 libid3tag0-dev \
-filebeat
 
 # audio waveform generator
 RUN git clone https://github.com/bbcrd/audiowaveform.git \
