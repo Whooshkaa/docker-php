@@ -23,7 +23,7 @@ libav-tools \
 automake autotools-dev git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev pkg-config \
 apt-transport-https \
 python-pip supervisor \
-libid3tag0-dev \
+libid3tag0-dev
 
 # audio waveform generator
 RUN git clone https://github.com/bbcrd/audiowaveform.git \
