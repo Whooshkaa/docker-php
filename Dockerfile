@@ -6,10 +6,6 @@ ENV REFRESHED_AT 2017-06-16
 ENV DEBIAN_FRONTEND noninteractive
 ENV INITRD No
 
-# Add a PPA for ffmpeg v3 since the official repo only has v2.x
-# as the latest version.
-RUN add-apt-repository ppa:jonathonf/ffmpeg-3 -y
-
 # Install all dependencies: PHP, Apache, eyed3, extra repositories,
 # waveform generator dependencies, image compression tools, s3fuse
 # supervisor, filebeat, AWS cli
@@ -28,6 +24,10 @@ automake autotools-dev git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-de
 apt-transport-https \
 python-pip supervisor \
 libid3tag0-dev
+
+# Add a PPA for ffmpeg v3 since the official repo only has v2.x
+# as the latest version.
+RUN add-apt-repository ppa:jonathonf/ffmpeg-3 -y
 
 # audio waveform generator
 RUN git clone https://github.com/bbcrd/audiowaveform.git \
