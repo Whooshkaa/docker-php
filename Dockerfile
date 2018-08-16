@@ -28,7 +28,10 @@ libid3tag0-dev
 # Add a PPA for ffmpeg v3 since the official repo only has v2.x
 # as the latest version. Then upgrade to this new version.
 RUN add-apt-repository ppa:jonathonf/ffmpeg-3 -y
-RUN apt-get update && apt-get install -y
+RUN apt-get update && apt-get install ffmpeg -y
+
+# Remove any unused packages
+RUN apt-get autoremove -y
 
 # audio waveform generator
 RUN git clone https://github.com/bbcrd/audiowaveform.git \
