@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER Phil Dodd "phil@whooshkaa.com"
-ENV REFRESHED_AT 2017-06-16
+ENV REFRESHED_AT 2019-12-19
 
 # avoid debconf and initrd
 ENV DEBIAN_FRONTEND noninteractive
@@ -25,10 +25,8 @@ apt-transport-https \
 python-pip supervisor \
 libid3tag0-dev
 
-# Add a PPA for ffmpeg v3 since the official repo only has v2.x
-# as the latest version. Then upgrade to this new version.
-RUN add-apt-repository ppa:jonathonf/ffmpeg-3 -y
-RUN apt-get update && apt-get install ffmpeg -y
+# SN: Removed ffmpeg from repo as the PPA was not available any more
+#     and it was not being used.
 
 # Remove any unused packages
 RUN apt-get autoremove -y
