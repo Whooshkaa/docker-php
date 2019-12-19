@@ -31,10 +31,7 @@ libid3tag0-dev
 # Remove any unused packages
 RUN apt-get autoremove -y
 
-# audio waveform generator
-RUN sudo add-apt-repository ppa:chris-needham/ppa
-RUN sudo apt-get update
-RUN sudo apt-get install audiowaveform
+# SN: Removed audio waveform generator as it is not being used any more.
 
 # s3fuse
 RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git \
