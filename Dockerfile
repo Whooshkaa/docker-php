@@ -32,19 +32,9 @@ libid3tag0-dev
 RUN apt-get autoremove -y
 
 # audio waveform generator
-RUN git clone https://github.com/bbcrd/audiowaveform.git \
-&& mkdir /audiowaveform/build \
-&& cd /audiowaveform \
-&& wget https://github.com/google/googletest/archive/release-1.8.0.tar.gz \
-&& tar xzf release-1.8.0.tar.gz \
-&& ln -s googletest-release-1.8.0/googletest googletest \
-&& ln -s googletest-release-1.8.0/googlemock googlemock \
-&& cd /audiowaveform/build \
-&& cmake .. \
-&& make \
-&& make install \
-&& cd / \
-&& rm -rf /audiowaveform
+RUN sudo add-apt-repository ppa:chris-needham/ppa
+RUN sudo apt-get update
+RUN sudo apt-get install audiowaveform
 
 # s3fuse
 RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git \
